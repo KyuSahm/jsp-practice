@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+    	<form action='calc' method="post">
+<!--	<form action='add-result' method="get"> -->
+	        <div>
+				<label>계산할 값을 입력하세요</label>
+			</div>				
+			<div>
+			    <label>x: </label>
+				<input name="var1" type="text"/>
+			</div>
+			<div>
+				<label>y: </label>	
+				<input name="var2" type="text"/>
+			</div>
+			<div>
+			    <!-- 둘중 하나를 클릭하면 이름은 같지만, 선택된 것의 value만 전달됨.-->				
+				<input type="submit" name="operator" value="덧셈"/>
+				<input type="submit" name="operator" value="뺄셈"/>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>배열값을 전달하는 방법</title>
+</head>
+<body>
+	<div>
+    	<form action='add2' method="post">
+	        <div>
+				<label>계산할 값들을 입력하세요</label>
+			</div>				
+			<div>
+				<!-- 동일한 이름으로 전달하면 배열의 형태로 전달 -->
+				<input type="text" name="vars" />
+				<input type="text" name="vars" />
+				<input type="text" name="vars" />
+				<input type="text" name="vars" />
+			</div>
+			<div>
+				<input type="submit" value="계산"/>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
