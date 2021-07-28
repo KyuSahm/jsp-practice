@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+    	<form action='calc4' method="post">
+	        <div>
+				<label>계산할 값을 입력하세요</label>
+			</div>
+			<!--  입력한 상태값을 저장하는 방법 -->				
+			<div>
+			    <label>입력: </label>
+				<input type="text" name="var" />
+			</div>
+			<div>
+			    <!-- 둘중 하나를 클릭하면 이름은 같지만, 선택된 것의 value만 전달됨.-->				
+				<input type="submit" name="operator" value="+"/>
+				<input type="submit" name="operator" value="-"/>
+				<input type="submit" name="operator" value="="/>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
