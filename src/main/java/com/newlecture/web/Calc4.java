@@ -84,11 +84,15 @@ public class Calc4 extends HttpServlet
         	
         	// Step2: 사용자가 /calc4라는 주소를 요청할 때만 브라우저가 전달받은 쿠키가 서버로 전달됨.
         	valueCookie.setPath("/calc4");
+        	valueCookie.setMaxAge(24*60*60); // 초단위, 24시간 설정.
         	opCookie.setPath("/calc4");
         	
         	// Step1: 서버에서 브라우저로 쿠키를 전달함.
             response.addCookie(valueCookie);
         	response.addCookie(opCookie);
+        	
+        	// Page Redirect(원하는 페이지로 이동시킴)
+        	response.sendRedirect("calc4.html");
         }
     }
 }
