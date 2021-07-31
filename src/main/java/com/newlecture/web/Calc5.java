@@ -1,7 +1,6 @@
 package com.newlecture.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,79 +19,51 @@ public class Calc5 extends HttpServlet
     public void service(HttpServletRequest request, HttpServletResponse response)
            throws IOException, ServletException
     {
-		// 방법 1: 해당 서블릿에 설정
-		// 보내는 문자열의 인코딩을 정해줌		
-		response.setCharacterEncoding("UTF-8");		
-		// 웹브라우저가 읽을 때 사용하는 인코딩을 정해줌(브라우저가 받은 문자열을 어떻게 해석할지를 결정)		
-        response.setContentType("text/html;charset=UTF-8");		
-        
-        Cookie[] cookies = request.getCookies();
-        String var = request.getParameter("var");
+		String value = request.getParameter("value");
         String operator = request.getParameter("operator");
+        String dot = request.getParameter("dot");
         
-        PrintWriter out = response.getWriter();        
-        
-        int a = 0;
-        
-        // html에서 var이 존재하면 null값은 오지 않음.
-        if (!var.equals(""))
-        {
-        	a = Integer.parseInt(var);
-        }
-        
-        if (operator.equals("="))
-        {
-        	int x = 0;
-        	int y = a;
-        	
-        	for (Cookie c : cookies)
-        	{
-	        	if (c.getName().equals("value"))
+        String exp = "";
+        Cookie[] cookies = request.getCookies();
+		if (cookies != null)
+		{
+			for (Cookie c : cookies)
+	    	{
+	        	if (c.getName().equals("exp"))
 	        	{
-	        		x = Integer.parseInt(c.getValue());
+	        		exp = c.getValue();
 	        		break;
 	        	}
-        	}
-        	
-        	String op = "";
-        	for (Cookie c : cookies)
-        	{
-	        	if (c.getName().equals("operator"))
-	        	{
-	        		op = c.getValue();
-	        		break;
-	        	}
-        	}
-        		
-        	if (op.equals("+"))
-        	{
-	        	int result = x + y;        	
-	        	out.println("덧셈 결과:");
-	            out.printf("%d + %d = %d",  x, y, result);
-        	}
-        	else
-        	{
-        		int result = x - y;        	
-	        	out.println("뺄셈 결과:");
-	            out.printf("%d - %d = %d",  x, y, result);
-        	}
-        }
-        else
-        {
-        	Cookie valueCookie = new Cookie("value", String.valueOf(a));
-        	Cookie opCookie = new Cookie("operator", operator);
-        	
-        	// Step2: 사용자가 /calc4라는 주소를 요청할 때만 브라우저가 전달받은 쿠키가 서버로 전달됨.
-        	valueCookie.setPath("/calc4");
-        	valueCookie.setMaxAge(24*60*60); // 초단위, 24시간 설정.
-        	opCookie.setPath("/calc4");
-        	
-        	// Step1: 서버에서 브라우저로 쿠키를 전달함.
-            response.addCookie(valueCookie);
-        	response.addCookie(opCookie);
-        	
-        	// Page Redirect(원하는 페이지로 이동시킴)
-        	response.sendRedirect("calc4.html");
-        }
+	    	}
+		}
+		
+		if (operator != null && operator.equals("="))
+		{
+			int a = Integer.parseInt(exp.substring(0, 1));			
+			int b = Integer.parseInt(exp.substring(2, 3));
+			exp = String.valueOf(a+b);
+			/*
+			// 자바코드에서 java script를 실행할 수 있는 엔진.
+			ScriptEngine engine = new ScriptEngineManager(null).getEngineByName("nashorn");
+			try {
+				// engine.eval => 자바스크립트 실행
+				exp = String.valueOf(engine.eval(exp));
+			} catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		}
+		else
+		{
+			// 사용자는 "v" or "operator" or "dot" 세가지 종류 중에 하나만 누를 수 있다.
+		    // 나머지는 null값으로 온다.
+			exp += (value == null) ? "" : value;
+			exp += (operator == null) ? "" : operator;
+			exp += (dot == null) ? "" : dot;
+		}
+		
+        Cookie expCookie = new Cookie("exp", exp);
+        response.addCookie(expCookie);
+        response.sendRedirect("calcpage");
     }
 }

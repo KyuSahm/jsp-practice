@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,19 @@ public class CalcPage extends HttpServlet
     public void service(HttpServletRequest request, HttpServletResponse response)
            throws IOException, ServletException
     {
+		String exp = "0";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null)
+		{
+			for (Cookie c : cookies)
+	    	{
+	        	if (c.getName().equals("exp"))
+	        	{
+	        		exp = c.getValue();
+	        		break;
+	        	}
+	    	}
+		}
 		// 방법 1: 해당 서블릿에 설정
 		// 보내는 문자열의 인코딩을 정해줌		
 		response.setCharacterEncoding("UTF-8");		
@@ -51,19 +65,19 @@ public class CalcPage extends HttpServlet
         out.write("    	<form action='calc5' method=\"post\">");
         out.write("	        <table>");
         out.write("	        	<tr>");
-        out.write("	        		<td class=\"output\" colspan=\"4\">0</td>");
+        out.printf("	        		<td class=\"output\" colspan=\"4\">%s</td>", exp);
         out.write("	        	</tr>");
         out.write("	        	<tr>");
         out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"CE\"/></td>");
         out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"C\"/></td>");
         out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"BS\"/></td>");
-        out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"÷\"/></td>");
+        out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"/\"/></td>");
         out.write("	        	</tr>");
         out.write("	        	<tr>");
         out.write("	        		<td><input type=\"submit\" name=\"value\" value=\"7\"/></td>");
         out.write("	        		<td><input type=\"submit\" name=\"value\" value=\"8\"/></td>");
         out.write("	        		<td><input type=\"submit\" name=\"value\" value=\"9\"/></td>");
-        out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"X\"/></td>");
+        out.write("	        		<td><input type=\"submit\" name=\"operator\" value=\"*\"/></td>");
         out.write("	        	</tr>");
         out.write("	        	<tr>");
         out.write("	        		<td><input type=\"submit\" name=\"value\" value=\"4\"/></td>");
