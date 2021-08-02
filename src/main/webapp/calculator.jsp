@@ -1,6 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 <%
 int x = 3;
 int y = 4;
+%>
+
+<%=y %>
+
+<%!
+    public int sum(int a, int b)
+    { 
+        return a + b;
+    }
 %>
 
 <!DOCTYPE html>
