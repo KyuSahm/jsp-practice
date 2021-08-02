@@ -53,6 +53,10 @@ public class Calc5 extends HttpServlet
 				e.printStackTrace();
 			}*/
 		}
+		else if (operator != null && operator.equals("C"))
+		{
+			exp = "";
+		}
 		else
 		{
 			// 사용자는 "v" or "operator" or "dot" 세가지 종류 중에 하나만 누를 수 있다.
@@ -63,6 +67,12 @@ public class Calc5 extends HttpServlet
 		}
 		
         Cookie expCookie = new Cookie("exp", exp);
+        
+        if (operator != null && operator.equals("C"))
+		{
+        	// 쿠키의 MaxAge를 0으로 하면, 쿠키를 지운다.
+        	expCookie.setMaxAge(0);
+		}
         response.addCookie(expCookie);
         response.sendRedirect("calcpage");
     }
