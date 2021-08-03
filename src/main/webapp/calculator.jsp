@@ -3,6 +3,20 @@
 <%
 int x = 3;
 int y = 4;
+// int page = 3; // Duplicate variable error 발생, 기본적으로 생성되는 jsper code중에 page가 존재
+
+/*  생성된 Servlet에 존재하는 내장 변수 및 객체. 중복되지 않게 사용할 필요가 있다.
+    (final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+      
+    final javax.servlet.jsp.PageContext pageContext;
+    javax.servlet.http.HttpSession session = null;
+    final javax.servlet.ServletContext application;
+    final javax.servlet.ServletConfig config;
+    javax.servlet.jsp.JspWriter out = null;
+    final java.lang.Object page = this;
+    javax.servlet.jsp.JspWriter _jspx_out = null;
+    javax.servlet.jsp.PageContext _jspx_page_context = null;
+*/    
 %>
 
 <%=y %>
