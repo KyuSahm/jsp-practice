@@ -21,6 +21,12 @@ pageContext.setAttribute("model", "model in page");
     페이지 내의 모델: ${pageScope.model}<br>
     Request 내의 모델: ${requestScope.model}<br>
     ${param.num}<br>
-    ${header.accept}<br>    
+    ${header.accept}<br>
+    num > 3: ${param.num > 3}<br>    
+    num >= 3: ${param.num ge 3}<br>
+    empty 연산자 테스트 ${empty param.nullvariable} = ${param.nullvariable == null || param.nullvariable == ''}<br>
+    not empty 연산자 테스트 ${not empty param.nullvariable} = ${param.nullvariable != null && param.nullvariable != ''}<br>
+    ${empty param.num ? '값이 비어 있습니다': param.num}<br>
+    ${param.num/2}<br>
 </body>
 </html>
