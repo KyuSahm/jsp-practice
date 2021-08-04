@@ -7,10 +7,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%
+pageContext.setAttribute("aa", "hello");
+pageContext.setAttribute("model", "model in page");
+%>
 <body>
-    <%=request.getAttribute("model")%>입니다.
-    ${model}라고요.
-    리스트는 ${names[0]}, ${names[1]}입니다
-    제목은 ${notice.title}입니다.
+    <%=request.getAttribute("model")%>입니다.<br>
+    ${model}라고요. 우선 순위에 의해 페이지 스코프의 변수의 내용이 출력됩니다.<br>
+    리스트는 ${names[0]}, ${names[1]}입니다<br>
+    제목은 ${notice.title}입니다.<br>
+    페이지 컨텍스트 테스트: <%=(String)pageContext.getAttribute("aa")%><br>
+    페이지 컨텍스트 테스트: ${aa}<br>    
+    페이지 내의 모델: ${pageScope.model}<br>
+    Request 내의 모델: ${requestScope.model}<br>
+    ${param.num}<br>
+    ${header.accept}<br>    
 </body>
 </html>
