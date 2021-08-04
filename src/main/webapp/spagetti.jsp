@@ -9,5 +9,8 @@
 </head>
 <body>
     <%=request.getAttribute("model")%>입니다.
+    ${model}라고요.
+    리스트는 ${names[0]}, ${names[1]}입니다
+    제목은 ${notice.title}입니다.
 </body>
 </html>

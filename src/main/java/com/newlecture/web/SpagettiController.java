@@ -1,6 +1,8 @@
 package com.newlecture.web;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +36,16 @@ public class SpagettiController extends HttpServlet {
 		
 		// Step 1: request에 값을 담음.
 		request.setAttribute("model", model);
+		
+		// Step 1: request에 값을 담음.
+		String[] namesStr = {"newlec", "dragon"};
+		request.setAttribute("names", namesStr);
+		
+		// Step 1: request에 값을 담음.
+		Map<String, Object> notice = new HashMap<String, Object>();
+		notice.put("id",  1);
+		notice.put("title",  "디자인 패턴");
+		request.setAttribute("notice", notice);
 		
 		// redirect or forward
 		// redirect => 현재 작업한 내용과 상관없이 다른 페이지로 이동
