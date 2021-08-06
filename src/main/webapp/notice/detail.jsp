@@ -1,37 +1,4 @@
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.util.Date"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-    int id = Integer.parseInt(request.getParameter("id"));
-    String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-    String uid = "NEWLEC";
-    String pwd = "ehalthf93";
-    String driver = "oracle.jdbc.driver.OracleDriver";
-    
-    String sql = "SELECT * FROM NOTICE WHERE ID=?";   
-    
-    Class.forName(driver);
-    Connection conn = DriverManager.getConnection(url,uid, pwd);
-    PreparedStatement stmt = conn.prepareStatement(sql);    
-    stmt.setInt(1, id);
-    
-    ResultSet rs = stmt.executeQuery();    
-    rs.next();
-    
-    String title = rs.getString("TITLE");
-    Date regdate = rs.getDate("REGDATE");
-    String writerID = rs.getString("WRITER_ID");    
-    int hitCnt = rs.getInt("HIT");
-    String content = rs.getString("CONTENT");
-    String files = rs.getString("FILES");
-    
-    rs.close();
-    stmt.close();
-    conn.close();
-%>
 
 <!DOCTYPE html>
 <html>
@@ -180,24 +147,24 @@
 							<tbody>
 								<tr>
 									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=title%></td>
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=request.getAttribute("title")%></td>
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3"><%=regdate%></td>
+									<td class="text-align-left text-indent" colspan="3"><%=request.getAttribute("regdate")%></td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=writerID%></td>
+									<td><%=request.getAttribute("writeId")%></td>
 									<th>조회수</th>
-									<td><%=hitCnt%></td>
+									<td><%=request.getAttribute("hitCnt")%></td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="3"><%=files%></td>
+									<td colspan="3"><%=request.getAttribute("files")%></td>
 								</tr>
 								<tr class="content">
-									<td colspan="4"><%=content%></td>
+									<td colspan="4"><%=request.getAttribute("content")%></td>
 								</tr>
 							</tbody>
 						</table>
@@ -210,21 +177,15 @@
 					<div class="margin-top">
 						<table class="table border-top-default">
 							<tbody>
-								
 								<tr>
 									<th>다음글</th>
 									<td colspan="3"  class="text-align-left text-indent">다음글이 없습니다.</td>
 								</tr>
 								
-									
-								
-								
 								<tr>
 									<th>이전글</th>
 									<td colspan="3"  class="text-align-left text-indent"><a class="text-blue text-strong" href="">스프링 DI 예제 코드</a></td>
 								</tr>
-								
-								
 							</tbody>
 						</table>
 					</div>			
