@@ -2,6 +2,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.util.Date"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     int id = Integer.parseInt(request.getParameter("id"));
@@ -19,7 +20,19 @@
     
     ResultSet rs = stmt.executeQuery();    
     rs.next();
+    
+    String title = rs.getString("TITLE");
+    Date regdate = rs.getDate("REGDATE");
+    String writerID = rs.getString("WRITER_ID");    
+    int hitCnt = rs.getInt("HIT");
+    String content = rs.getString("CONTENT");
+    String files = rs.getString("FILES");
+    
+    rs.close();
+    stmt.close();
+    conn.close();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -161,31 +174,30 @@
 						<li>공지사항</li>
 					</ul>
 				</div>
-				
 				<div class="margin-top first">
 						<h3 class="hidden">공지사항 내용</h3>
 						<table class="table">
 							<tbody>
 								<tr>
 									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=rs.getString("TITLE")%></td>
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=title%></td>
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3"><%=rs.getDate("REGDATE")%></td>
+									<td class="text-align-left text-indent" colspan="3"><%=regdate%></td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=rs.getString("WRITER_ID")%></td>
+									<td><%=writerID%></td>
 									<th>조회수</th>
-									<td><%=rs.getInt("HIT")%></td>
+									<td><%=hitCnt%></td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="3"></td>
+									<td colspan="3"><%=files%></td>
 								</tr>
 								<tr class="content">
-									<td colspan="4"><%=rs.getString("CONTENT")%></td>
+									<td colspan="4"><%=content%></td>
 								</tr>
 							</tbody>
 						</table>
@@ -258,9 +270,4 @@
         </footer>
     </body>
     
-    </html>
-<%
-    rs.close();
-    stmt.close();
-    conn.close();
-%>    
+    </html>    
