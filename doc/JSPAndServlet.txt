@@ -418,7 +418,37 @@ public class Notice {
              .....
    } 
 
+25. JSTL의 개념
+1) JSTL => JSP Standard Tag Library. 예전에는 사용자의 필요에 따라 Tag library를 만들어서 사용. 지금은 JSTL로 충분.
+2) JSTL tag의 범주: Core, Formatting, Functions, SQL, XML
+- Core: 가장 기본적인 제어의 행위를 담당.
+ 예: 루프
+- Formatting: 값을 출력할 때, 포매팅 함수 지원
+ 예: 숫자 및 날짜 포맷팅
+- Functions: 받은 데이터를 조작하는 함수들 제공
+ 예: 문자열 쪼개기, 대문자화, 소문자화 등
+- SQL: MVC Model 2에서는 추천하지 않음
+- XML: MVC Model 2에서는 추천하지 않음 
 
+3) 동작방식
+- Jasper이 HTML내의 JSTL tag들을 다른 HTML Tag들과 구분짓도록 하기 위해 아래의 접두사(prefix)를 사용
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+- Jasper는 "<c:forEach ..."처럼 Tag의 접두사 "c"를 보고, URI가 "http://java.sun.com/jsp/jstl/core"인 Tag임을 인식
+- 접두사 "c"는 uri="http://java.sun.com/jsp/jstl/core"에 대한 별칭으로 보면 됨.
 
-   
+26. JSTL Core 
+1) tag종류는 이미지 파일 "JSTL_Core_Tags.png"파일을 참조
+
+27. 가장 간단한 for 태그 라이브러리 만들기
+1) "CREATE_SIMPLE_TAG_LIBRARY.png" 내용 참조
+2) 새로운 태그를 사용하기 위해서는, Tag descriptor을 "WEB-INF/{파일명}.tld"로 생성해줘야 함. => Jasper이 해당 파일을 읽음.
+- tag descriptor을 통해서 "for"란 이름을 가진 Tag("<name>for</name")가 특정 Tag class("<tagclass>com.newlecture.web.taglib.ForTag</tagclass>")와 연결되어 있음을 안다.
+3) "<uri>http://www.newlecture.com/jsp/tags/control</uri>"를 정의하는 이유
+=> 만약 다른 사람이 동일한 이름의 "for"를 생성해 놓으면, 충돌이 날 수 있기 때문에, uri를 추가해 놓는다.
+=> 예를 들면, 자바의 클래스명에다가 패키지명을 만들듯, "for"에 대한 URI를 만들어 두면 다른 것들과 구분이 될 수 있다.
+4) TagSupport란 클래스를 상속하여 사용자 정의 클래스 생성: "CREATE_SIMPLE_TAG_LIBRARY_2.png", "CREATE_SIMPLE_TAG_LIBRARY_3.png" 내용 참조
+- doStartTag(), doEndTag(), doAfterBody()를 재정의 해야함.
+- doStartTag(): JSP내의 사용자가 정의한 "<for>"를 만나면 호출
+- doAfterBody(): JSP내의 사용자가 정의한 "</for>"의 바로 전에서 호출
+- doEndTag(): JSP내의 사용자가 정의한 "</for>"를 만나면 호출  
