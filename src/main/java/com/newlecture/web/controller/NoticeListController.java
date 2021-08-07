@@ -72,7 +72,7 @@ public class NoticeListController extends HttpServlet {
  		// redirect => 현재 작업한 내용과 상관없이 다른 페이지로 이동
  		// forward => 현재 작업한 내용을 이어감(모델을 공유)
  		// Step 2: Dispatcher를 이용해서 "spagetti.jsp"에 Forward함 
- 		RequestDispatcher dispatcher = request.getRequestDispatcher("/notice/list.jsp"); // jsp 경로는 home directory에서부터 찾아가는 형식으로 지정.
+ 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/notice/list.jsp"); // jsp 경로는 home directory에서부터 찾아가는 형식으로 지정.
  		dispatcher.forward(request,  response);
    	}
 }
