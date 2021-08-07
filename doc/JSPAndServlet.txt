@@ -400,6 +400,24 @@ public class Notice {
 - 일반적으로 사용자는 Controller에 map된 페이지에 접근하고, JSP 페이지는 Forwarding 되어 있으므로, JSP 페이지는 은닉해야 한다.
 - 사용자가 바로 JSP 페이지에 접근하면, Controller에서 넘겨준 Model이 없기 때문에 JSP 페이지에서 에러가 발생한다.
 - "WEB-INF" 하위에 "view" 폴더를 만들어서, JSP 페이지들을 모두 옮김. 
+- 은닉한 JSP파일을 아래와 같이 접근하고자 하면, "HTTP 404 - 찾을수 없음" 에러가 발생
+=> http://localhost:8080/WEB-INF/view/notice/list.jsp
+
+24. JSP내의 자바의 반복문 제거
+- EL은 반복문을 제공하지 않음
+- 반복문을 사용하기 위한 TAG가 필요 => <forEach></forEach> => JSTL tag library를 다운로드
+- JSTL은 "JSP Standard Tag Library"
+- JSTL tag library를 다운로드:
+ 구글 브라우저에서 "jstl download" => "Maven Repository"과 관련된 페이지로 이동 => "jar" 버튼을 클릭하여 다운로드한 후, "WEB-INF/lib"에 복사
+
+- "<c:forEach var="n" items="${list}">....</c:forEach>"의 역할은 아래와 동일 
+=> EL을 이용해서 request에서 "list"를 꺼내와서, 루프를 돌면서 item들을 pageContext에 "n"이라는 이름으로 담아주는 역할
+   List<Notice> list = (List<Notice>)request.getAttribute("list");
+   for (Notice notice:list) {
+	pageContext.setAttribute("n", notice);
+             .....
+   } 
+
 
 
 

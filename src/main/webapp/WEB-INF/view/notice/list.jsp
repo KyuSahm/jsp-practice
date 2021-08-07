@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -174,13 +175,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<%
-					List<Notice> list = (List<Notice>)request.getAttribute("list");
-					
-					// EL을 사용하기 위해서는 page, request, session, application 중 하나에 담아야 한다.
-					for (Notice notice:list) {
-						pageContext.setAttribute("n", notice);
-					%>
+                    <c:forEach var="n" items="${list}">
 					<tr>
 						<td>${n.id}</td>
 						<td class="title indent text-align-left"><a href="detail?id=${n.id}">${n.title}</a></td>
@@ -190,7 +185,7 @@
 						</td>
 						<td>${n.hit}</td>
 					</tr>
-					<% } %>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>
