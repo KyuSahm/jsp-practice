@@ -1,3 +1,7 @@
+<%@page import="com.newlecture.web.entity.Notice"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -15,6 +19,26 @@
     Connection conn = DriverManager.getConnection(url,uid, pwd);
     Statement stmt = conn.createStatement();
     ResultSet rs = stmt.executeQuery(sql);
+    
+    List<Notice> list = new ArrayList<Notice>();
+    
+    while (rs.next())
+    {
+    	int id = rs.getInt("ID");
+	    String title = rs.getString("TITLE");
+	    Date regdate = rs.getDate("REGDATE");
+	    String writerId = rs.getString("WRITER_ID");    
+	    int hit = rs.getInt("HIT");
+	    String content = rs.getString("CONTENT");
+        String files = rs.getString("FILES");
+        
+	    Notice notice = new Notice(id, title, regdate, writerId, hit, content, files);
+	    list.add(notice);
+    }
+    
+    rs.close();
+    stmt.close();
+    conn.close();
 %>
 <!DOCTYPE html>
 <html>
@@ -188,16 +212,20 @@
 						</tr>
 					</thead>
 					<tbody>
-					<% while (rs.next()) { %>		
+					<%
+					// EL을 사용하기 위해서는 page, request, session, application 중 하나에 담아야 한다.
+					for (Notice notice:list) {
+						pageContext.setAttribute("n", notice);
+					%>
 					<tr>
-						<td><%=rs.getInt("ID")%></td>
-						<td class="title indent text-align-left"><a href="detail?id=<%=rs.getInt("ID")%>"><%=rs.getString("TITLE")%></a></td>
-						<td><%=rs.getString("WRITER_ID")%></td>
+						<td>${n.id}</td>
+						<td class="title indent text-align-left"><a href="detail?id=${n.id}">${n.title}</a></td>
+						<td>${n.writerId}</td>
 						<td>
-							<%=rs.getDate("REGDATE")%>		
+							${n.regdate}%>		
 						</td>
-						<td><%=rs.getInt("HIT")%></td>
-					</tr>				
+						<td>${n.hit}</td>
+					</tr>
 					<% } %>
 					</tbody>
 				</table>
@@ -271,8 +299,3 @@
     </body>
     
     </html>
-<%
-    rs.close();
-    stmt.close();
-    conn.close();
-%>
