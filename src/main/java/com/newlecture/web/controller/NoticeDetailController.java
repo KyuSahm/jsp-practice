@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.newlecture.web.entity.Notice;
+
 @WebServlet("/notice/detail")
 public class NoticeDetailController extends HttpServlet {
 
@@ -41,7 +43,7 @@ public class NoticeDetailController extends HttpServlet {
 		    String title = rs.getString("TITLE");
 		    Date regdate = rs.getDate("REGDATE");
 		    String writerId = rs.getString("WRITER_ID");    
-		    int hitCnt = rs.getInt("HIT");
+		    int hit = rs.getInt("HIT");
 		    String content = rs.getString("CONTENT");
 		    String files = rs.getString("FILES");
 		
@@ -49,13 +51,10 @@ public class NoticeDetailController extends HttpServlet {
 		    stmt.close();
 		    conn.close();
 		    
-		    // Step 1: request에 값을 담음.	 		
-	 		request.setAttribute("title", title);
-	 		request.setAttribute("regdate", regdate);
-	 		request.setAttribute("writerId", writerId);
-	 		request.setAttribute("hitCnt", hitCnt);
-	 		request.setAttribute("content", content);
-	 		request.setAttribute("files", files);
+		    Notice notice = new Notice(id, title, regdate, writerId, hit, content, files);
+
+		    // Step 1: request에 값을 담음.
+		    request.setAttribute("notice", notice);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
