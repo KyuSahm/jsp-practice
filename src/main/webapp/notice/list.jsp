@@ -1,45 +1,7 @@
 <%@page import="com.newlecture.web.entity.Notice"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-	String uid = "NEWLEC";
-	String pwd = "ehalthf93";
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	
-	String sql = "SELECT * FROM NOTICE";   
-    
-    Class.forName(driver);
-    Connection conn = DriverManager.getConnection(url,uid, pwd);
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(sql);
-    
-    List<Notice> list = new ArrayList<Notice>();
-    
-    while (rs.next())
-    {
-    	int id = rs.getInt("ID");
-	    String title = rs.getString("TITLE");
-	    Date regdate = rs.getDate("REGDATE");
-	    String writerId = rs.getString("WRITER_ID");    
-	    int hit = rs.getInt("HIT");
-	    String content = rs.getString("CONTENT");
-        String files = rs.getString("FILES");
-        
-	    Notice notice = new Notice(id, title, regdate, writerId, hit, content, files);
-	    list.add(notice);
-    }
-    
-    rs.close();
-    stmt.close();
-    conn.close();
-%>
 <!DOCTYPE html>
 <html>
 
@@ -213,6 +175,8 @@
 					</thead>
 					<tbody>
 					<%
+					List<Notice> list = (List<Notice>)request.getAttribute("list");
+					
 					// EL을 사용하기 위해서는 page, request, session, application 중 하나에 담아야 한다.
 					for (Notice notice:list) {
 						pageContext.setAttribute("n", notice);
