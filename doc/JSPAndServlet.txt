@@ -465,4 +465,30 @@ public class Notice {
      <td>${n.hit}</td>
    </tr>
  </c:forEach>
+3) <c:forEach>를 이용한 페이져 구현
+예) 정적으로 1 ~ 5페이지가 나오도록 구현
+ <ul class="-list- center">
+   <c:forEach var="i" begin="0" end="4">
+     <li><a class="-text- orange bold" href="?p=${i + 1 }&t=&q=" >${i + 1}</a></li>
+   </c:forEach>		
+ </ul>
 
+29. JSTL Core <c:set>
+1) 임시변수를 선언하는 Tag
+예) ${param.xxx}의 의미는 30번 참조.
+ <c:set var="page" value="${(param.p == null) ? 1: param.p}"/>
+ <c:set var="startNum" value="${page - (page - 1) % 5}"/>
+ <ul class="-list- center">
+   <c:forEach var="i" begin="0" end="4">
+     <li><a class="-text- orange bold" href="?p=${startNum + i}&t=&q=" >${startNum + i}</a></li>
+   </c:forEach>		
+ </ul>
+
+30. JSTL ${param.xxx}
+예) 사용자가 아래와 같이 주소 입력 후, get으로 "name"값을 전달
+ http://127.0.0.1:8080/jstl/ifTag.jsp?name=bk 
+ ${param.name} => ifTag.jsp에서 jstl tag를 이용해서 받을 수 있음.
+                          param 은 파라미터값으로 넘어온 데이터를 뜻하고
+                          name 은 그 데이터중 name이라는 이름을 갖는 데이터의 값을 가져오겠다는 뜻이다.
+
+결국, ${param.name} 는 request.getParameter("name") 과 같음.
