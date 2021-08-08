@@ -506,3 +506,15 @@ public class Notice {
  <c:if test="${startNum + 5 > lastNum}">
    <span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
  </c:if>
+
+32. JSTL Core = forTokens로 첨부파일 목록 출력하기
+예) String을 받아서 delimeter로 짤라서 여러개의 element를 생성해서 for loop를 돔.
+ <tr>
+   <th>첨부파일</th>
+     <td colspan="3" style="text-align:left;text-indent:10px">
+       <c:forTokens var="fileName" items="${notice.files}" delims="," varStatus="st"> => "notice.files"의 문자열을 받아서, ","를 사용해서 여러 element로 생성. 
+         <a href="${fileName}">${fileName}</a>
+         <c:if test="${!st.last}">/</c:if> =>"varStatus"를 이용해서, 루프의 최종 element를 알아냄.   
+       </c:forTokens>
+     </td>
+ </tr>
