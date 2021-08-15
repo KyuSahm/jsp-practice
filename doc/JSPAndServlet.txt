@@ -521,6 +521,7 @@ public class Notice {
 
 33. JSTL format
 1) 관련 링크
+- https://www.javatpoint.com/jstl-formatting-tags
 - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=imf4&logNo=220654812087
 
 2) format 변경을 위한 taglib를 JSP 상단에 추가
@@ -531,4 +532,33 @@ public class Notice {
 - y:년, M:월, d:일. 월을 대문자 M을 쓰는 이유는 분(minute)을 m으로 사용.
 예)
  <td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regdate}"/></td>
+
+4) formatNumber
+- 숫자 출력 형식 변경
+예)
+<td><fmt:formatNumber value="${notice.hit}"/></td> => 기본적으로 천마다 ','를 사용
+<td><fmt:formatNumber type="number" pattern='#,####' value="${notice.hit}"/></td> => 네자리마다 ','를 사용. ',' 앞에 존재하는 '#'의 개수는 중요하지 않음.
+<td><fmt:formatNumber type="number" pattern='#,####원' value="${notice.hit}"/></td> => "1,2345,6777원" 출력
+예)
+<c:set var="Amount" value="9850.14115" />  
+<p> Formatted Number-1:  
+<fmt:formatNumber value="${Amount}" type="currency" /></p>
+출력: $9,850.14
+<p>Formatted Number-2:  
+<fmt:formatNumber type="number" groupingUsed="true" value="${Amount}" /></p>
+출력: 9,850.141
+<p>Formatted Number-3:  
+<fmt:formatNumber type="number" maxIntegerDigits="3" value="${Amount}" /></p>  
+출력: 850.141
+<p>Formatted Number-4:  
+<fmt:formatNumber type="number" maxFractionDigits="6" value="${Amount}" /></p>
+출력: 9,850.14115  
+<p>Formatted Number-5:  
+<fmt:formatNumber type="percent" maxIntegerDigits="4" value="${Amount}" /></p>  
+출력: 5014%
+<p>Formatted Number-6:  
+<fmt:formatNumber type="number" pattern="###.###$" value="${Amount}" /></p>
+출력: 9850.141$
+
+34. JSTL:functions로 EL에서 함수 이용하기
 
