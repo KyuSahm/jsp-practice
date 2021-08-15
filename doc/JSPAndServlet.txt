@@ -561,4 +561,21 @@ public class Notice {
 출력: 9850.141$
 
 34. JSTL:functions로 EL에서 함수 이용하기
+1) JSP 상단에 태그 추가
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+2) EL내부에 필요한 함수를 지정(eclipse editor에서 "fn:"입력 후, ctrl + shift하면 함수를 찾아줌)
+예) 파일 이름을 대문자로 바꾸기
+<c:forTokens var="fileName" items="${notice.files}" delims="," varStatus="st">
+    <a href="${fileName}">${fn:toUpperCase(fileName)}</a>
+    <c:if test="${!st.last}">/</c:if>    
+</c:forTokens>
 
+예) "*.zip"인 경우에 글자를 폰트의 굵기와 색깔을 변경
+<c:forTokens var="fileName" items="${notice.files}" delims="," varStatus="st">
+    <c:set var="style" value="" /> 
+    <c:if test="${fn:endsWith(fileName, '.zip')}">
+      <c:set var="style" value="font-weight: bold; color:red;" />
+    </c:if>
+    <a href="${fileName}" style="${style}">${fn:toUpperCase(fileName)}</a>
+    <c:if test="${!st.last}">/</c:if>    
+</c:forTokens>
