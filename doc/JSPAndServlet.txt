@@ -507,7 +507,7 @@ public class Notice {
    <span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
  </c:if>
 
-32. JSTL Core = forTokens로 첨부파일 목록 출력하기
+32. JSTL Core <c:forTokens> - 파일 목록 생성하기
 예) String을 받아서 delimeter로 짤라서 여러개의 element를 생성해서 for loop를 돔.
  <tr>
    <th>첨부파일</th>
@@ -518,3 +518,17 @@ public class Notice {
        </c:forTokens>
      </td>
  </tr>
+
+33. JSTL format
+1) 관련 링크
+- https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=imf4&logNo=220654812087
+
+2) format 변경을 위한 taglib를 JSP 상단에 추가
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+3) formatDate
+- 날짜 형식 변경
+- y:년, M:월, d:일. 월을 대문자 M을 쓰는 이유는 분(minute)을 m으로 사용.
+예)
+ <td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regdate}"/></td>
+
