@@ -579,3 +579,8 @@ public class Notice {
     <a href="${fileName}" style="${style}">${fn:toUpperCase(fileName)}</a>
     <c:if test="${!st.last}">/</c:if>    
 </c:forTokens>
+
+35. 기업형으로 레이어를 나누는 이유와 설명
+1) 분리 이유 - 개발자가 역할 분담을 할 수 있음.
+2) 화면(JSP)와 관련된 Controller와 내부의 서비스와 트랜잭션을 담당하는 클래스를 분리
+3) 서비스를 담당하는 부분을 업무 서비스(Service)와 데이터서비스(DAO)를 클래스로 다시 분리할 수 있음
