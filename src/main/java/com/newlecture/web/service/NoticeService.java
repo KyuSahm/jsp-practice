@@ -15,19 +15,12 @@ public class NoticeService {
 	
 	public List<Notice> getNoticeList(String field, String query, int page) {
 		String sql =
-				"SELECT B.* " +
-				 " FROM (SELECT ROWNUM AS SEQ, A.* " +
-				         " FROM (SELECT * " +
-				                 " FROM NOTICE " +
-				                " ORDER BY REGDATE DESC ) A " +
-				      " ) B " +
-				" WHERE B.SEQ BETWEEN 6 and 10";
-         /*
-				SELECT *
-				  FROM (SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) SEQ,
-				               A.*
-				         FROM NOTICE A ) B
-				 WHERE B.SEQ BETWEEN 6 and 10;*/        
+				"SELECT * " + 
+				 " FROM (SELECT ROWNUM ROWSEQ, A.* "+
+				         " FROM (SELECT * " + 
+				                 " FROM NOTICE "+
+				                " ORDER BY REGDATE DESC) A ) "+
+				" WHERE ROWSEQ BETWEEN 6 and 10";        
 		return null;
 	}
 	
@@ -37,26 +30,47 @@ public class NoticeService {
 	
 	public int getNoticeCount(String field, String query) {
 		String sql =
-				"SELECT B.* " +
-				 " FROM (SELECT ROWNUM AS SEQ, A.* " +
-				         " FROM (SELECT * " +
-				                 " FROM NOTICE " +
-				                " ORDER BY REGDATE DESC ) A " +
-				      " ) B " +
-				" WHERE B.SEQ BETWEEN 6 and 10";
+				"SELECT * " + 
+				 " FROM (SELECT ROWNUM ROWSEQ, A.* "+
+				         " FROM (SELECT * " + 
+				                 " FROM NOTICE "+
+				                " ORDER BY REGDATE DESC) A ) "+
+				" WHERE ROWSEQ BETWEEN 6 and 10";
         
 		return 0;
 	}
 	
 	public Notice getNotice(int id) {
+		String sql =
+				"SELECT * " +
+				 " FROM NOTICE "+
+				" WHERE ID = ?";
 		return null;
 	}
 	
 	public Notice getPrevNotice(int id) {
+		String sql = "SELECT * " +
+				      " FROM (SELECT ROWNUM ROWSEQ, B.* "+
+				              " FROM (SELECT * "+
+				                      " FROM NOTICE A "+
+				                     " WHERE REGDATE < (SELECT REGDATE "+ 
+				                                       " FROM NOTICE "+
+				                                      " WHERE ID = ?) "+
+				                     " ORDER BY REGDATE DESC) B) "+
+				     " WHERE ROWSEQ = 1 ";
 		return null;
 	}
 	
 	public Notice getNextNotice(int id) {
+		String sql = "SELECT * " +
+				      " FROM (SELECT ROWNUM ROWSEQ, B.* "+
+				              " FROM (SELECT * "+
+				                      " FROM NOTICE A "+
+				                     " WHERE REGDATE > (SELECT REGDATE "+ 
+				                                       " FROM NOTICE "+
+				                                      " WHERE ID = ?) "+
+				                     " ORDER BY REGDATE ASC) B) "+
+				     " WHERE ROWSEQ = 1 ";
 		return null;
 	}
 }
